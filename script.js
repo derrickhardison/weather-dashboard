@@ -48,6 +48,12 @@ $(document).ready(function () {
         // Log the resulting object
         console.log(response);
 
+        imageIconCode = response.weather[0].icon;
+        imageSourceURL = "http://openweathermap.org/img/wn/" + imageIconCode + "@2x.png"
+        $("#iconImage").attr("src", imageSourceURL);
+
+        console.log(imageSourceURL);
+
         // tested for weather icon - did not work
         // console.log(response.weather[0].icon)
       });
