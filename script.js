@@ -48,13 +48,20 @@ $(document).ready(function () {
         // Log the resulting object
         console.log(response);
 
-        console.log(response.weather.icon)
+        // tested for weather icon - did not work
+        // console.log(response.weather[0].icon)
       });
 
     $.ajax({
       url: queryURL2,
       method: "GET",
     }).then(function (response) {
+      forecastTemp = response.list[0].main.temp;
+      $("#forecastTemp").text(forecastTemp);
+
+      forecastHumid = response.list[0].main.humidity;
+      $("#forecastHumidity").text(forecastHumid);
+
       console.log(queryURL2);
       console.log(response);
     });
