@@ -2,15 +2,17 @@ $(document).ready(function () {
 
 
 
-    function searchForACity (e){
-        e.preventDefault();
-        console.log("test");
-    }
+    function searchForACity (){
+         console.log("new test");
+     }
     
 
     // Event listeners
 
-    //adds event listener to city search button
-    $(document).on("click", ".btn", searchForACity)
+    // adds event listener to search button
+
+    $(".search-button").on("click", function(){
+        searchForACity();
+    })
     
     });
