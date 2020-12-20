@@ -11,7 +11,7 @@ $(document).ready(function () {
     "&appid=" +
     APIKey;
 
-    var queryURL2 =
+  var queryURL2 =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     nameOfCity +
     "&appid=" +
@@ -26,20 +26,38 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
+        // grabbing name of city and adding it to page
+        dynamicNameCity = response.name;
+        $("#dynCityName").text(dynamicNameCity);
+
+        // grabbing temperature of city and adding it to page
+        dynamicTemp = response.main.temp;
+        $("#dynTemperature").text("Temperature: " + dynamicTemp + " °F");
+
+        // grabbing humidity of city and adding it to page
+        dynamicHumid = response.main.humidity;
+        $("#dynHumid").text("Humidity: " + dynamicHumid + " %");
+
+        // grabbing wind speed of city and adding it to page
+        dynamicWindSpeed = response.wind.speed;
+        $("#dynWindSpeed").text("Wind Speed: " + dynamicWindSpeed + " MPH");
+
         // Log the queryURL
         console.log(queryURL);
 
         // Log the resulting object
         console.log(response);
+
+        console.log(response.weather.icon)
       });
 
-      $.ajax({
-          url: queryURL2,
-          method: "GET",
-      }).then(function(response){
-        console.log(queryURL2);
-        console.log(response)
-      });
+    $.ajax({
+      url: queryURL2,
+      method: "GET",
+    }).then(function (response) {
+      console.log(queryURL2);
+      console.log(response);
+    });
   }
 
   // FUNCTION CALLS
