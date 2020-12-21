@@ -1,6 +1,7 @@
 $(document).ready(function () {
   //DOM VARIABLES
   var cityHistoryEl = $("#cityHistory");
+  $("#currentDate").text(moment().format("(M/D/YYYY)"));
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
