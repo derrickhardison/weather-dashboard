@@ -1,15 +1,12 @@
 $(document).ready(function () {
   //DOM VARIABLES
+  var cityHistoryEl = $("#cityHistory");
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
   var APIKey = "7138f209713bfc5af60e3ab4b13ebf4e";
+  var cityHistoryArray = [];
   // Here we are building the URL we need to query the database
-  var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
-    nameOfCity +
-    "&appid=" +
-    APIKey;
 
   var queryURL2 =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
@@ -18,8 +15,47 @@ $(document).ready(function () {
     APIKey;
 
   //FUNCTION DEFINITIONS
-  function searchForACity() {
+
+  function setStorage() {
+    // if (localStorage.getItem("localCityHistory")){
+    //   cityHistoryArray = localStorage.getItem("localCityHistory")
+
+    // }
+    localStorage.setItem("localCityHistory", JSON.stringify(cityHistoryArray));
+    onLoad();
+  }
+
+  function onLoad() {
+    cityHistoryEl.html("");
+
+    if (localStorage.getItem("localCityHistory")) {
+      cityHistoryArray = JSON.parse(localStorage.getItem("localCityHistory"));
+    }
+
+    for (i = 0; i < cityHistoryArray.length; i++) {
+      var newListItem = $("<li>");
+
+      newListItem.addClass("list-group-item").text(cityHistoryArray[i]);
+      cityHistoryEl.append(newListItem);
+
+      console.log(cityHistoryArray[i]);
+    }
+  }
+
+  function searchForACity(city) {
+    if (cityHistoryArray.indexOf(city) !== -1) {
+      cityHistoryArray.splice(cityHistoryArray.indexOf(city), 1);
+    }
+    cityHistoryArray.unshift(city);
+    setStorage();
+
     // Here we run our AJAX call to the OpenWeatherMap API
+    var queryURL =
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      city +
+      "&appid=" +
+      APIKey;
+
     $.ajax({
       url: queryURL,
       method: "GET",
@@ -49,7 +85,8 @@ $(document).ready(function () {
         console.log(response);
 
         imageIconCode = response.weather[0].icon;
-        imageSourceURL = "http://openweathermap.org/img/wn/" + imageIconCode + "@2x.png"
+        imageSourceURL =
+          "http://openweathermap.org/img/wn/" + imageIconCode + "@2x.png";
         $("#iconImage").attr("src", imageSourceURL);
 
         console.log(imageSourceURL);
@@ -74,9 +111,16 @@ $(document).ready(function () {
   }
 
   // FUNCTION CALLS
+  onLoad();
 
   // Event listeners
   $(".search-button").on("click", function () {
-    searchForACity();
+    var cityInput = $("#citySearch").val();
+    searchForACity(cityInput);
+  });
+
+  $(document).on("click", ".list-group-item", function (event) {
+    var searchParam = event.target.textContent;
+    searchForACity(searchParam);
   });
 });
