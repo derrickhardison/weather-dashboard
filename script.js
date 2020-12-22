@@ -1,7 +1,8 @@
 $(document).ready(function () {
   //DOM VARIABLES
   var cityHistoryEl = $("#cityHistory");
-  $("#currentDate").text(moment().format("(M/D/YYYY)"));
+  
+
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
@@ -9,12 +10,7 @@ $(document).ready(function () {
   var cityHistoryArray = [];
   // Here we are building the URL we need to query the database
 
-  var queryURL2 =
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
-    nameOfCity +
-    "&units=imperial" +
-    "&appid=" +
-    APIKey;
+
 
   //FUNCTION DEFINITIONS
 
@@ -62,6 +58,8 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
+
+        $("#currentDate").text(moment().format("(M/D/YYYY)"));
         // grabbing name of city and adding it to page
         dynamicNameCity = response.name;
         $("#dynCityName").text(dynamicNameCity);
@@ -95,26 +93,38 @@ $(document).ready(function () {
         // console.log(response.weather[0].icon)
       });
 
+      var queryURL2 =
+      "https://api.openweathermap.org/data/2.5/forecast?q=" +
+      nameOfCity +
+      "&units=imperial" +
+      "&appid=" +
+      APIKey;
+
     $.ajax({
       url: queryURL2,
       method: "GET",
     }).then(function (response) {
-      forecastTemp = response.list[0].main.temp;
-      
 
+      $("#forecastHeading").text("5-Day Forecast:");
+
+      forecastTemp = response.list[0].main.temp;
       forecastHumid = response.list[0].main.humidity;
       
 
+
       for(var i = 0; i < 5; i++){
         var cardDiv = $("<div>");
-        cardDiv.attr("class", "card col-2");
+        cardDiv.attr("class", "card col-2 cardStyling");
+        cardDiv.attr("style", "background:#007bff")
+        // cardDiv.attr("style", "color:white")
         $("#bottomSection").append(cardDiv);
+
 
         var cardBody = $("<div>");
         cardBody.attr("class", "card-body");
         cardDiv.append(cardBody);
 
-        var cardDate = $("<p>");
+        var cardDate = $("<h5>");
         cardDate.text(moment().format("(M/D/YYYY)"));
         cardDiv.append(cardDate);
 
