@@ -1,8 +1,6 @@
 $(document).ready(function () {
   //DOM VARIABLES
   var cityHistoryEl = $("#cityHistory");
-  
-
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
@@ -10,12 +8,9 @@ $(document).ready(function () {
   var cityHistoryArray = [];
   // Here we are building the URL we need to query the database
 
-
-
   //FUNCTION DEFINITIONS
 
   function setStorage() {
-
     localStorage.setItem("localCityHistory", JSON.stringify(cityHistoryArray));
     onLoad();
   }
@@ -58,7 +53,6 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
-
         $("#currentDate").text(moment().format("(M/D/YYYY)"));
         // grabbing name of city and adding it to page
         dynamicNameCity = response.name;
@@ -93,7 +87,7 @@ $(document).ready(function () {
         // console.log(response.weather[0].icon)
       });
 
-      var queryURL2 =
+    var queryURL2 =
       "https://api.openweathermap.org/data/2.5/forecast?q=" +
       nameOfCity +
       "&units=imperial" +
@@ -104,21 +98,17 @@ $(document).ready(function () {
       url: queryURL2,
       method: "GET",
     }).then(function (response) {
-
       $("#forecastHeading").text("5-Day Forecast:");
 
       forecastTemp = response.list[0].main.temp;
       forecastHumid = response.list[0].main.humidity;
-      
 
-
-      for(var i = 0; i < 5; i++){
+      for (var i = 0; i < 5; i++) {
         var cardDiv = $("<div>");
         cardDiv.attr("class", "card col-2 cardStyling");
-        cardDiv.attr("style", "background:#007bff")
+        cardDiv.attr("style", "background:#007bff");
         // cardDiv.attr("style", "color:white")
         $("#bottomSection").append(cardDiv);
-
 
         var cardBody = $("<div>");
         cardBody.attr("class", "card-body");
@@ -135,11 +125,7 @@ $(document).ready(function () {
         var cardHumid = $("<p>");
         cardHumid.text("Humidity: " + forecastHumid);
         cardDiv.append(cardHumid);
-
-        
-
       }
-
     });
   }
 
