@@ -107,7 +107,7 @@ $(document).ready(function () {
 
       for(var i = 0; i < 5; i++){
         var cardDiv = $("<div>");
-        cardDiv.attr("class", "card");
+        cardDiv.attr("class", "card col-2");
         $("#bottomSection").append(cardDiv);
 
         var cardBody = $("<div>");
