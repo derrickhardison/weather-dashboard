@@ -2,7 +2,6 @@ $(document).ready(function () {
   //DOM VARIABLES
   var cityHistoryEl = $("#cityHistory");
   $("#currentDate").text(moment().format("(M/D/YYYY)"));
-  $(".forecastDate").text(moment().format("(M/D/YYYY)"));
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
@@ -20,10 +19,7 @@ $(document).ready(function () {
   //FUNCTION DEFINITIONS
 
   function setStorage() {
-    // if (localStorage.getItem("localCityHistory")){
-    //   cityHistoryArray = localStorage.getItem("localCityHistory")
 
-    // }
     localStorage.setItem("localCityHistory", JSON.stringify(cityHistoryArray));
     onLoad();
   }
@@ -104,13 +100,36 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (response) {
       forecastTemp = response.list[0].main.temp;
-      $("#forecastTemp").text("Temp: " + forecastTemp);
+      
 
       forecastHumid = response.list[0].main.humidity;
-      $("#forecastHumidity").text("Humidity: " + forecastHumid);
+      
 
-      console.log(queryURL2);
-      console.log(response);
+      for(var i = 0; i < 5; i++){
+        var cardDiv = $("<div>");
+        cardDiv.attr("class", "card");
+        $("#bottomSection").append(cardDiv);
+
+        var cardBody = $("<div>");
+        cardBody.attr("class", "card-body");
+        cardDiv.append(cardBody);
+
+        var cardDate = $("<p>");
+        cardDate.text(moment().format("(M/D/YYYY)"));
+        cardDiv.append(cardDate);
+
+        var cardTemp = $("<p>");
+        cardTemp.text("Temp: " + forecastTemp);
+        cardDiv.append(cardTemp);
+
+        var cardHumid = $("<p>");
+        cardHumid.text("Humidity: " + forecastHumid);
+        cardDiv.append(cardHumid);
+
+        
+
+      }
+
     });
   }
 
