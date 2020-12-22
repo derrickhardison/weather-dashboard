@@ -2,6 +2,7 @@ $(document).ready(function () {
   //DOM VARIABLES
   var cityHistoryEl = $("#cityHistory");
   $("#currentDate").text(moment().format("(M/D/YYYY)"));
+  $(".forecastDate").text(moment().format("(M/D/YYYY)"));
 
   //JAVASCRIPT VARIABLES
   var nameOfCity = "atlanta";
@@ -12,6 +13,7 @@ $(document).ready(function () {
   var queryURL2 =
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
     nameOfCity +
+    "&units=imperial" +
     "&appid=" +
     APIKey;
 
@@ -54,6 +56,7 @@ $(document).ready(function () {
     var queryURL =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
       city +
+      "&units=imperial" +
       "&appid=" +
       APIKey;
 
@@ -101,10 +104,10 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (response) {
       forecastTemp = response.list[0].main.temp;
-      $("#forecastTemp").text(forecastTemp);
+      $("#forecastTemp").text("Temp: " + forecastTemp);
 
       forecastHumid = response.list[0].main.humidity;
-      $("#forecastHumidity").text(forecastHumid);
+      $("#forecastHumidity").text("Humidity: " + forecastHumid);
 
       console.log(queryURL2);
       console.log(response);
